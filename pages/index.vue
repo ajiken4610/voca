@@ -1,8 +1,8 @@
 <template lang="pug">
 .container.my-4
-    input.form-control(v-model="a")
-    input.form-control(v-model="b")
-    span {{ r}}
+    UiTextfield(v-model="a")
+    UiTextfield(v-model="b")
+    span {{ r }}
 </template>
 
 <script setup lang="ts">

@@ -6,3 +6,7 @@ div
 <script setup lang="ts">
 import "bootstrap";
 </script>
+
+<style lang="scss">
+@use "bootstrap";
+</style>

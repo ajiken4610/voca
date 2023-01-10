@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@prettier/plugin-pug": "^2.3.0",
+    "@volar/vue-language-plugin-pug": "^1.0.24",
     "prettier": "^2.8.2",
     "pug": "^3.0.2",
     "sass": "^1.57.1"

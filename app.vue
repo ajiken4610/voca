@@ -2,7 +2,7 @@
 div
   UiTopAppBar(
     content-selector="#content-main",
-    type="standard",
+    type="fixed",
     title="Voca",
     @nav="openDrawer = true"
   )

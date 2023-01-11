@@ -45,7 +45,7 @@ export enum WordType {
   INTERJECTION,
 }
 
-interface WordData {
+export interface WordData {
   key: string;
   value: string;
   ex: string;

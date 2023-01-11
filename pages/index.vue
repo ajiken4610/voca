@@ -1,15 +1,11 @@
 <template lang="pug">
-.container.my-4
-    UiTextfield(v-model="a")
-    UiTextfield(v-model="b")
-    span {{ r }}
+div
+    WordList
+    button(@click="add") add
 </template>
 
 <script setup lang="ts">
-const a = ref("hello")
-const b = ref("hallo")
-const r = ref(0)
-watchEffect(() => {
-    r.value = calculateDistanceBetweenSentence(a.value, b.value)
-})
+const add = () => {
+    useWordList().push({ key: "aa", value: "bb", score: 0, correctCount: 0, ex: "hello world", type: WordType.NONE })
+}
 </script>

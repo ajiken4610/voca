@@ -1,4 +1,4 @@
-enum WordType {
+export enum WordType {
   /**
    * なし
    */
@@ -54,7 +54,9 @@ interface WordData {
   type: WordType;
 }
 
-const list = JSON.parse(localStorage.getItem("words") || "[]") as WordData[];
+const list = reactive(
+  JSON.parse(localStorage.getItem("words") || "[]") as WordData[]
+);
 watchEffect(() => {
   localStorage.setItem("words", JSON.stringify(list));
 });

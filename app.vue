@@ -7,7 +7,7 @@ div
     @nav="openDrawer = true"
   )
     template(#toolbar="{ toolbarItemClass }")
-      UiIconButton(:class="toolbarItemClass", icon="share")
+      UiIconButton(:class="toolbarItemClass", icon="share" @click="shareApp" v-if="shareButtonAvailable")
   UiDrawer(v-model="openDrawer", type="modal")
     UiDrawerHeader
       UiDrawerTitle Voca
@@ -18,10 +18,10 @@ div
             UiItemFirstContent
               UiIcon home
             UiItemTextContent Home
-        NuxtLink(to="/list")
+        NuxtLink(to="/list/1")
           UiNavItem(
             href="javascript:void(0)",
-            :active="$route.path === '/list'"
+            :active="!!$route.path.match(listMatcher)"
           )
             UiItemFirstContent
               UiIcon list
@@ -33,12 +33,24 @@ div
 </template>
 
 <script setup lang="ts">
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - YukiVocaLearn` : 'YukiVocaLearn';
+  }
+})
+
 const openDrawer = ref(false);
 watchEffect(() => {
   if (useRoute().fullPath) {
     openDrawer.value = false;
   }
 });
+
+const shareApp = () => {
+  navigator.share({ title: "", text: "", url: "https://ykvocl.web.app" })
+}
+const shareButtonAvailable = computed(() => !!navigator.share)
+const listMatcher = /\/list\/.*/
 </script>
 
 <style lang="scss">

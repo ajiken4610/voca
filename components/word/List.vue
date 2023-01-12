@@ -24,13 +24,24 @@ UiTable(
 <script setup lang="ts">
 import { useConfirm } from "balm-ui";
 import type { WordData } from "@/composables/useWordList";
+import type { Ref } from "vue";
+
+const props = defineProps<{ page: number }>()
+const emit = defineEmits<(e: "update:page", val: number) => void>()
 
 const itemsPerPage = 8;
 const list = useWordList();
-const page = ref(1);
+let page: Ref<number> = ref(1);
+watchEffect(() => {
+  page.value = props.page;
+})
+
+watchEffect(() => {
+  emit("update:page", page.value)
+})
 const total = computed(() => Math.max(1, list.length));
 const goToEditPage = (i: number) => {
-  console.log(i);
+  //console.log(i);
   useRouter().push({ path: "/edit/" + (i + (page.value - 1) * itemsPerPage) });
 };
 const removeWord = (i: number) => {

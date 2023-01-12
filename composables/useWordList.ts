@@ -72,9 +72,9 @@ export const updateWordListScore = () => {
     word.score += Math.pow(ratio, word.correctCount);
   }
   sortWordList();
-  const maxScore = list[list.length - 1].score;
+  const minScore = list[0].score;
   for (const word of list) {
-    word.score -= maxScore;
+    word.score -= minScore;
   }
 };
 

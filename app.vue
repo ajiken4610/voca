@@ -4,9 +4,12 @@ div
     content-selector="#content-main",
     type="fixed",
     title="Voca",
-    @nav="openDrawer = true"
+    @nav="onTopAppBarButtonPushed"
+    :navIcon="$route.meta.useBackButton ? 'arrow_back' : 'menu'"
   )
     template(#toolbar="{ toolbarItemClass }")
+      NuxtLink(to="/settings")
+        UiIconButton(:class="toolbarItemClass" icon="settings")
       UiIconButton(:class="toolbarItemClass", icon="share" @click="shareApp" v-if="shareButtonAvailable")
   UiDrawer(v-model="openDrawer", type="modal")
     UiDrawerHeader
@@ -26,6 +29,17 @@ div
             UiItemFirstContent
               UiIcon list
             UiItemTextContent WordList
+        NuxtLink(to="/add")
+          UiNavItem(href="javascript:void(0)", :active="$route.path === '/add'")
+            UiItemFirstContent
+              UiIcon add
+            UiItemTextContent Add
+        UiListDivider
+        NuxtLink(to="/settings")
+          UiNavItem(href="javascript:void(0)", :active="$route.path === '/settings'")
+            UiItemFirstContent
+              UiIcon settings
+            UiItemTextContent Settings
         UiListDivider
   UiGrid#content-main
     UiGridCell(:columns="{ desktop: 12, tablet: 8, phone: 4 }")
@@ -46,6 +60,14 @@ watchEffect(() => {
   }
 });
 
+const onTopAppBarButtonPushed = () => {
+  if (useRoute().meta.useBackButton) {
+    useRouter().back()
+  } else {
+    openDrawer.value = true;
+  }
+}
+
 const shareApp = () => {
   navigator.share({ title: "", text: "", url: "https://ykvocl.web.app" })
 }
@@ -60,5 +82,9 @@ const listMatcher = /\/list\/.*/
 
 a {
   text-decoration: none;
+}
+
+#content-main {
+  max-width: 1280px;
 }
 </style>

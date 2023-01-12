@@ -1,10 +1,11 @@
 <template lang="pug">
-.align-center(:class="$tt('headline3')")
+.title(:class="$tt('headline3')")
     slot
 </template>
 
 <style scoped lang="scss">
-.align-center {
+.title {
     text-align: center;
+    margin-bottom: 1rem
 }
 </style>

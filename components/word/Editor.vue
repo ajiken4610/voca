@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-    CentorizedTitle Add word
     UiForm(type="|" itemMarginBottom="16" actionAlign="center")
         UiFormField
             UiTextfield(v-model="word.key" fullwidth) Key 
@@ -15,9 +14,9 @@ div
 import type { WordData } from '~~/composables/useWordList';
 
 const props = defineProps<{ modelValue: WordData }>()
-const word = props.modelValue
+const word = toRef(props, "modelValue")
 const emit = defineEmits<(e: "update:modelValue", val: WordData) => void>()
 watchEffect(() => {
-    emit("update:modelValue", word)
+    emit("update:modelValue", word.value)
 })
 </script>

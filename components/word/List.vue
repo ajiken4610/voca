@@ -17,7 +17,10 @@ UiTable(
       :pageSize="8",
       position="center"
     )
-.no-item(v-else) No items
+.no-item(v-else)
+  div No items
+  NuxtLink(to="/add")
+    UiButton(raised) Add word
 .margin
 </template>
 

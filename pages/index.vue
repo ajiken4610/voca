@@ -3,7 +3,9 @@ div
     Head
         Title Home
     .title-wrapper
-        CentorizedTitle.title Welcome to YukiVocaLearn
+        CentorizedTitle.title Welcome to
+            br
+            | Yuki Voca Learn
     UiDivider
     button(@click="add") add
 </template>

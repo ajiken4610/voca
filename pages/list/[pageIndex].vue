@@ -8,8 +8,8 @@ div
 </template>
 
 <script setup lang="ts">
-const page = ref(parseInt(useRoute().params.pageIndex.toString()))
+const page = useState<number>("wordListPage", () => 1)
 watch(page, () => {
-    history.replaceState(null, "", `/list/${page.value}`)
-})
+    history.pushState(history.state, "", `/list/${page.value}`)
+}, { immediate: true })
 </script>

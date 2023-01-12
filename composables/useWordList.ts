@@ -59,7 +59,10 @@ const correct = 1;
 const wrong = 2;
 
 const list = reactive(
-  JSON.parse(localStorage.getItem("words") || "[]") as WordData[]
+  useState(
+    "words",
+    () => JSON.parse(localStorage.getItem("words") || "[]") as WordData[]
+  ).value
 );
 watchEffect(() => {
   localStorage.setItem("words", JSON.stringify(list));

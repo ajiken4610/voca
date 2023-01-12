@@ -6,7 +6,9 @@ div
         UiFormField
             UiTextfield(v-model="word.value" fullwidth) Value
         UiFormField
-            UiTextfield(v-model="word.ex" fullwidth inputType="textarea" rows="8") Example (use [] for hiding the word)
+            UiSelect(v-model="word.type" :options="selectOptions" fullwidth) Type
+        UiFormField
+            UiTextfield(v-model="word.ex" fullwidth inputType="textarea" rows="8") Example (use [] to hide words)
 
 </template>
 
@@ -19,4 +21,9 @@ const emit = defineEmits<(e: "update:modelValue", val: WordData) => void>()
 watchEffect(() => {
     emit("update:modelValue", word.value)
 })
+
+const selectOptions: { label: string, value: number }[] = []
+for (var i = 0; i < 11; i++) {
+    selectOptions.push({ label: WordType[i], value: i })
+}
 </script>

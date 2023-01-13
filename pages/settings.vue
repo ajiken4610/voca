@@ -13,13 +13,13 @@ div
                 UiItemLastContent
                     .border-left
                         UiSwitch(v-model="settings[key]")
-    UiDialog(v-model="showDescriptionDialog")
+    UiDialog(v-model="showDescriptionDialog" fullscreen @close="$router.back()")
         UiDialogTitle {{ hint[descriptionKey]?.name || "Settings" }}
         UiDialogContent
             NuxtPage
             SettingDescription(:settingKey="descriptionKey")
         UiDialogActions
-            UiButton(@click="$router.back()") Save and close
+            UiButton(@click="showDescriptionDialog=false") Save and close
 </template>
 
 <script setup lang="ts">

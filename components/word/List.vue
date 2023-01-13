@@ -25,7 +25,6 @@ UiTable(
 </template>
 
 <script setup lang="ts">
-import { useConfirm } from "balm-ui";
 import type { WordData } from "@/composables/useWordList";
 import type { Ref } from "vue";
 
@@ -50,11 +49,12 @@ const goToEditPage = (i: number) => {
 const removeWord = (i: number) => {
   const index = i + (page.value - 1) * itemsPerPage;
   const word = list[index];
-  useConfirm()(`Remove ${word.key}?`).then((result: void) => {
-    if (result as unknown as boolean) {
-      list.splice(index, 1);
-    }
-  });
+  showConfirm(`Remove ${word.key}?`)
+    .then((result) => {
+      if (result as unknown as boolean) {
+        list.splice(index, 1);
+      }
+    });
 };
 const listData = computed(() => {
   const ret: (WordData & { index?: number })[] = list.slice(

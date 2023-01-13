@@ -1,8 +1,8 @@
 <template lang="pug">
 UiTable(
   v-if="list.length",
-  :thead="['KEY', 'VAL', '']",
-  :tbody="['key', 'value', { slot: 'edit', align: 'right' }]",
+  :thead="['KEY', 'VAL','OPT', '']",
+  :tbody="['key', 'value','score', { slot: 'edit', align: 'right' }]",
   :data="listData",
   fullwidth
 )
@@ -18,7 +18,7 @@ UiTable(
       position="center"
     )
 .no-item(v-else)
-  div No items
+  .mb No items
   NuxtLink(to="/add")
     UiButton(raised) Add word
 .margin
@@ -77,5 +77,9 @@ const listData = computed(() => {
 
 .margin {
   margin-top: 1rem;
+}
+
+.mb {
+  margin-bottom: 1rem;
 }
 </style>

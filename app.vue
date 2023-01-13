@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-    //- NuxtLayout
     UiTopAppBar(
         content-selector="#content-main",
         type="fixed",
@@ -35,6 +34,11 @@ div
                         UiItemFirstContent
                             UiIcon add
                         UiItemTextContent Add
+                NuxtLink(to="/test")
+                    UiNavItem(href="javascript:void(0)", :active="$route.path === '/test'")
+                        UiItemFirstContent
+                            UiIcon quiz
+                        UiItemTextContent Test
                 UiListDivider
                 NuxtLink(to="/settings")
                     UiNavItem(href="javascript:void(0)", :active="$route.path === '/settings'")

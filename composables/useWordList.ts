@@ -60,7 +60,6 @@ const wrong = 2;
 
 const list = reactive(
   useState(
-    "words",
     () => JSON.parse(localStorage.getItem("words") || "[]") as WordData[]
   ).value
 );

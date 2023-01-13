@@ -8,7 +8,7 @@ div
 </template>
 
 <script setup lang="ts">
-const page = useState<number>("wordListPage", () => 1)
+const page = useState<number>(() => 1)
 watch(page, () => {
     history.pushState(history.state, "", `/list/${page.value}`)
 }, { immediate: true })

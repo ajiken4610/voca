@@ -8,7 +8,7 @@ const defaultSettings: Settings = {
   showExample: true,
 };
 const settings = reactive(
-  useState("settings", () => {
+  useState(() => {
     const settingsText = localStorage.getItem("settings");
     return {
       ...defaultSettings,

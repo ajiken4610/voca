@@ -12,7 +12,7 @@ div
 
 <script setup lang="ts">
 const add = () => {
-    useWordList().push({
+    useWordList().value.push({
         key: "aa",
         value: "bb",
         score: 0,

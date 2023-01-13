@@ -23,7 +23,7 @@ const addWord = () => {
     if (!data.value.key || !data.value.value) {
         showToast("Key and Value is required.")
     } else {
-        useWordList().push(data.value);
+        useWordList().value.push(data.value);
         showToast("Added " + data.value.key)
         data.value = {
             key: '',

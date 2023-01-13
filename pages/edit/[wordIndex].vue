@@ -11,7 +11,7 @@ div
 definePageMeta({ useBackButton: true })
 const wordIndex = parseInt(useRoute().params.wordIndex.toString());
 const list = useWordList();
-const word = list[wordIndex];
+const word = list.value[wordIndex];
 if (!word) {
     goTo404();
 }

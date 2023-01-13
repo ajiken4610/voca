@@ -58,38 +58,36 @@ const ratio = 0.8;
 const correct = 1;
 const wrong = 2;
 
-const list = reactive(
-  useState(
-    () => JSON.parse(localStorage.getItem("words") || "[]") as WordData[]
-  ).value
+const list = useState<WordData[]>(() =>
+  JSON.parse(localStorage.getItem("words") || "[]")
 );
 watchEffect(() => {
-  localStorage.setItem("words", JSON.stringify(list));
+  localStorage.setItem("words", JSON.stringify(list.value));
 });
 
 export default () => list;
 
 export const updateWordListScore = () => {
-  for (const word of list) {
+  for (const word of list.value) {
     word.score += Math.pow(ratio, word.correctCount);
   }
   sortWordList();
-  const minScore = list[0].score;
-  for (const word of list) {
+  const minScore = list.value[0].score;
+  for (const word of list.value) {
     word.score -= minScore;
   }
 };
 
 export const sortWordList = () => {
-  for (var i = 0; i < list.length; i++) {
-    const ri = Math.floor(Math.random() * list.length);
-    [list[i], list[ri]] = [list[ri], list[i]];
+  for (var i = 0; i < list.value.length; i++) {
+    const ri = Math.floor(Math.random() * list.value.length);
+    [list.value[i], list.value[ri]] = [list.value[ri], list.value[i]];
   }
-  list.sort((a, b) => a.score - b.score);
+  list.value.sort((a, b) => a.score - b.score);
 };
 
 export const updateCorrectCount = (index: number, isCorrect: boolean) => {
-  const current = list[index];
+  const current = list.value[index];
   if (isCorrect) {
     current.correctCount + correct;
   } else {

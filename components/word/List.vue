@@ -41,23 +41,23 @@ watchEffect(() => {
 watchEffect(() => {
   emit("update:page", page.value)
 })
-const total = computed(() => Math.max(1, list.length));
+const total = computed(() => Math.max(1, list.value.length));
 const goToEditPage = (i: number) => {
   //console.log(i);
   useRouter().push({ path: "/edit/" + (i + (page.value - 1) * itemsPerPage) });
 };
 const removeWord = (i: number) => {
   const index = i + (page.value - 1) * itemsPerPage;
-  const word = list[index];
+  const word = list.value[index];
   showConfirm(`Remove ${word.key}?`)
     .then((result) => {
       if (result as unknown as boolean) {
-        list.splice(index, 1);
+        list.value.splice(index, 1);
       }
     });
 };
 const listData = computed(() => {
-  const ret: (WordData & { index?: number })[] = list.slice(
+  const ret: (WordData & { index?: number })[] = list.value.slice(
     (page.value - 1) * itemsPerPage,
     (page.value - 1) * itemsPerPage + itemsPerPage
   );

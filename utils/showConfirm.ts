@@ -11,9 +11,10 @@ export default (message: string, title?: string) => {
     confirmMessage.value = message;
     confirmTitle.value = title || "";
     isConfirmShowing.value = true;
-    const describe = watch(confirmResult, () => {
+    const describe = watch(confirmResult, (result) => {
       describe();
-      resolve(confirmResult.value);
+      confirmResult.value = null;
+      resolve(result);
     });
   });
 };

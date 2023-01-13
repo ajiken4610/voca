@@ -19,6 +19,7 @@ const add = () => {
         correctCount: 0,
         ex: "hello world",
         type: WordType.NONE,
+        hideHint: false
     });
 };
 </script>

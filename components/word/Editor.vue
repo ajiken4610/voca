@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    UiForm(type="|" itemMarginBottom="16" actionAlign="center")
+    UiForm(itemMarginBottom="16" actionAlign="center")
         UiFormField
             UiTextfield(v-model="word.key" fullwidth) Key 
         UiFormField
@@ -9,7 +9,9 @@ div
             UiSelect(v-model="word.type" :options="selectOptions" fullwidth) Type
         UiFormField
             UiTextfield(v-model="word.ex" fullwidth inputType="textarea" rows="8") Example (use [] to hide words)
-
+        UiFormField
+            UiCheckbox(v-model="word.hideHint" input-id="hide-hint")
+            label(for="hide-hint") Hide hint
 </template>
 
 <script setup lang="ts">

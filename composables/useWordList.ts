@@ -52,6 +52,7 @@ export interface WordData {
   score: number;
   correctCount: number;
   type: WordType;
+  hideHint: boolean;
 }
 
 const ratio = 0.8;

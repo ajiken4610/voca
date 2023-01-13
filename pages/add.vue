@@ -16,7 +16,8 @@ const data = ref<WordData>({
     ex: '',
     score: 0,
     correctCount: 0,
-    type: WordType.NONE
+    type: WordType.NONE,
+    hideHint: false
 })
 
 const addWord = () => {
@@ -31,7 +32,8 @@ const addWord = () => {
             ex: '',
             score: 0,
             correctCount: 0,
-            type: WordType.NONE
+            type: WordType.NONE,
+            hideHint: false
         }
     }
 }

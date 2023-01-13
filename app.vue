@@ -72,7 +72,7 @@ const onTopAppBarButtonPushed = () => {
 }
 
 const shareApp = () => {
-    navigator.share({ title: "", text: "", url: "https://ykvocl.web.app" })
+    navigator.share({ title: "", text: "", url: "https://ykvocl.page.link/app" })
 }
 const shareButtonAvailable = computed(() => !!navigator.share)
 const listMatcher = /\/list\/.*/

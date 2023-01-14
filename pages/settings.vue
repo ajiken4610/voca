@@ -13,7 +13,7 @@ div
                 UiItemLastContent
                     .border-left
                         UiSwitch(v-model="settings[key]")
-    UiDialog(v-model="showDescriptionDialog" fullscreen @close="$router.back()")
+    UiDialog(v-model="showDescriptionDialog" fullscreen @close="$route.path !== '/settings' && $router.back()")
         UiDialogTitle {{ hint[descriptionKey]?.name || "Settings" }}
         UiDialogContent
             NuxtPage

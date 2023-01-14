@@ -80,11 +80,15 @@ export const updateWordListScore = () => {
 };
 
 export const sortWordList = () => {
-  for (var i = 0; i < list.value.length; i++) {
-    const ri = Math.floor(Math.random() * list.value.length);
-    [list.value[i], list.value[ri]] = [list.value[ri], list.value[i]];
+  sortArgumentWordList(list.value);
+};
+
+export const sortArgumentWordList = (list: WordData[]) => {
+  for (var i = 0; i < list.length; i++) {
+    const ri = Math.floor(Math.random() * list.length);
+    [list[i], list[ri]] = [list[ri], list[i]];
   }
-  list.value.sort((a, b) => a.score - b.score);
+  list.sort((a, b) => a.score - b.score);
 };
 
 export const updateCorrectCount = (index: number, isCorrect: boolean) => {

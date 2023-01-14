@@ -1,4 +1,4 @@
-import CalScoreWorker from "utils/workers/calScore?worker";
+import CalScoreWorker from "utils/workers/updateScore?worker";
 import type { WordData } from "~~/composables/useWordList";
 
 export default () => {

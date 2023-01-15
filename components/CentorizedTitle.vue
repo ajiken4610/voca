@@ -1,10 +1,10 @@
 <template lang="pug">
-h3.title
+h3.centorized-title
   slot
 </template>
 
 <style scoped lang="scss">
-.title {
+.centorized-title {
   text-align: center;
   margin-bottom: 1rem;
   letter-spacing: 0.2rem;

@@ -8,6 +8,9 @@ div
       | Yuki Voca Learn
   UiDivider
   button(@click="add") add
+  UiTextfield(v-model="textA") A
+  UiTextfield(v-model="textB") B 
+  div {{ distance }}
 </template>
 
 <script setup lang="ts">
@@ -22,6 +25,9 @@ const add = () => {
     hideHint: false,
   });
 };
+const textA = ref("")
+const textB = ref("")
+const distance = computed(() => calculateDistanceBetweenSentence(textA.value, textB.value))
 </script>
 
 <style scoped lang="scss">

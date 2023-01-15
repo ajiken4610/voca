@@ -1,8 +1,8 @@
 <template lang="pug">
 UiTable(
   v-if="list.length",
-  :thead="['KEY', 'VAL','OPT', '']",
-  :tbody="['key', 'value','score', { slot: 'edit', align: 'right' }]",
+  :thead="['KEY', 'VAL', 'OPT', '']",
+  :tbody="['key', 'value', 'score', { slot: 'edit', align: 'right' }]",
   :data="listData",
   fullwidth
 )
@@ -28,19 +28,19 @@ UiTable(
 import type { WordData } from "@/composables/useWordList";
 import type { Ref } from "vue";
 
-const props = defineProps<{ page: number }>()
-const emit = defineEmits<(e: "update:page", val: number) => void>()
+const props = defineProps<{ page: number }>();
+const emit = defineEmits<(e: "update:page", val: number) => void>();
 
 const itemsPerPage = 8;
 const list = useWordList();
 let page: Ref<number> = ref(1);
 watchEffect(() => {
   page.value = props.page;
-})
+});
 
 watchEffect(() => {
-  emit("update:page", page.value)
-})
+  emit("update:page", page.value);
+});
 const total = computed(() => Math.max(1, list.value.length));
 const goToEditPage = (i: number) => {
   //console.log(i);
@@ -49,12 +49,11 @@ const goToEditPage = (i: number) => {
 const removeWord = (i: number) => {
   const index = i + (page.value - 1) * itemsPerPage;
   const word = list.value[index];
-  showConfirm(`Remove ${word.key}?`)
-    .then((result) => {
-      if (result as unknown as boolean) {
-        list.value.splice(index, 1);
-      }
-    });
+  showConfirm(`Remove ${word.key}?`).then((result) => {
+    if (result as unknown as boolean) {
+      list.value.splice(index, 1);
+    }
+  });
 };
 const listData = computed(() => {
   const ret: (WordData & { index?: number })[] = list.value.slice(

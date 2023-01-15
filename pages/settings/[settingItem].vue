@@ -1,3 +1,3 @@
 <template lang="pug">
-div(style="display:none")
+div(style="display: none")
 </template>

@@ -10,7 +10,7 @@ div
 
 <script setup lang="ts">
 const list = useWordList();
-const word = computed(() => (list.value.length ? list.value[0] : null));
+const word = computed(() => (list.value.length ? list.value[list.value.length - 1] : null));
 </script>
 
 <style scoped lang="scss">

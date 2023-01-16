@@ -5,10 +5,10 @@ div
     CentorizedTitle {{ word.key }}
     .centorize
       | {{ word.ex }}
-      UiTextfield(v-model="answer" @enter="confirmAnswer") Value
-      UiTextfieldHelper(v-if="settings.showHint && !word.hideHint" visible) {{ getHint(word.value) }}
+      UiTextfield(v-model="answer", @enter="confirmAnswer") Value
+      UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       .mlauto
-        UiButton(@click="confirmAnswer" raised) Confirm
+        UiButton(@click="confirmAnswer", raised) Confirm
   template(v-else)
     .title-wrapper
       CentorizedTitle.title No item in word list.
@@ -18,12 +18,16 @@ div
 <script setup lang="ts">
 import getHint from "@/utils/getHint";
 const list = useWordList();
-const word = computed(() => (list.value.length ? list.value[list.value.length - 1] : null));
-const settings = useSettings()
-const answer = ref("")
+const word = computed(() =>
+  list.value.length ? list.value[list.value.length - 1] : null
+);
+const settings = useSettings();
+const answer = ref("");
 const confirmAnswer = () => {
-  console.log(calculateDistanceBetweenSentence(answer.value, word.value?.value || ""))
-}
+  console.log(
+    calculateDistanceBetweenSentence(answer.value, word.value?.value || "")
+  );
+};
 </script>
 
 <style scoped lang="scss">

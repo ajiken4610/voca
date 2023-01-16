@@ -9,7 +9,7 @@ div
   UiDivider
   button(@click="add") add
   UiTextfield(v-model="textA") A
-  UiTextfield(v-model="textB") B 
+  UiTextfield(v-model="textB") B
   div {{ distance }}
 </template>
 
@@ -25,9 +25,9 @@ const add = () => {
     hideHint: false,
   });
 };
-const textA = ref("")
-const textB = ref("")
-const distance = computed(() => calNgramDistance(textA.value, textB.value))
+const textA = ref("");
+const textB = ref("");
+const distance = computed(() => calNgramDistance(textA.value, textB.value));
 </script>
 
 <style scoped lang="scss">

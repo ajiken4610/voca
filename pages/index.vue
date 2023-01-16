@@ -27,7 +27,7 @@ const add = () => {
 };
 const textA = ref("")
 const textB = ref("")
-const distance = computed(() => calculateDistanceBetweenSentence(textA.value, textB.value))
+const distance = computed(() => calNgramDistance(textA.value, textB.value))
 </script>
 
 <style scoped lang="scss">

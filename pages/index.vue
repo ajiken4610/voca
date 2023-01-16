@@ -7,9 +7,11 @@ div
       br
       | Yuki Voca Learn
   UiDivider
-  button(@click="add") add
+  UiButton(raised @click="add") add
+  UiButton(raised @click="update") Update
   UiTextfield(v-model="textA") A
   UiTextfield(v-model="textB") B
+  UiButton(raised @click="calcDistance") calc
   div {{ distance }}
 </template>
 
@@ -25,9 +27,31 @@ const add = () => {
     hideHint: false,
   });
 };
-const textA = ref("");
-const textB = ref("");
-const distance = computed(() => calNgramDistance(textA.value, textB.value));
+const genRandomString = (length: number) => {
+  const ret: string[] = []
+  for (var i = 0; i < length; i++) {
+    ret.push(Math.random().toString(36).substring(2))
+  }
+  return ret.join("")
+}
+const textA = ref(genRandomString(40));
+const textB = ref(genRandomString(40));
+const distance = ref(0)
+const update = async () => {
+  console.log(useWordList().value = await updateScoreOnBackground())
+}
+watchEffect(() => {
+  distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
+})
+const calcDistance = () => {
+  console.log(textA.value.length, textB.value.length)
+
+  const start = performance.now()
+  distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
+  const end = performance.now()
+  // console.log(useCDBSMemoForDebug().memoIndex.length)
+  console.log(end - start)
+}
 </script>
 
 <style scoped lang="scss">

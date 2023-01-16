@@ -23,10 +23,25 @@ const word = computed(() =>
 );
 const settings = useSettings();
 const answer = ref("");
+enum JudgeResult {
+  ANSWERING,
+  CORRECT,
+  PROBABLY_CORRECT,
+  WRONG
+}
+const result = ref(JudgeResult.ANSWERING)
 const confirmAnswer = () => {
-  console.log(
-    calculateDistanceBetweenSentence(answer.value, word.value?.value || "")
-  );
+  const distance = calNgramDistance(answer.value, word.value?.value || "")
+  if (distance === 1) {
+    // 正解
+    result.value = JudgeResult.CORRECT
+  } else if (distance > .9) {
+    // 仮正解
+    result.value = JudgeResult.PROBABLY_CORRECT
+  } else {
+    // 不正解
+    result.value = JudgeResult.WRONG
+  }
 };
 </script>
 

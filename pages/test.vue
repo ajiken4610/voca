@@ -2,6 +2,7 @@
 div
   template(v-if="word")
     | {{ list }}
+    Title Testing {{ word.key }}
     CentorizedTitle {{ word.key }}
     .centorize
       | {{ word.ex }}
@@ -14,13 +15,13 @@ div
           template(v-else-if="calculating") Calculating
           template(v-else) Next
   template(v-else)
+    Title Test
     .title-wrapper
       CentorizedTitle.title No item in word list.
     UiDivider
 </template>
 
 <script setup lang="ts">
-import getHint from "@/utils/getHint";
 const list = useWordList();
 const word = computed(() =>
   list.value.length ? list.value[list.value.length - 1] : null

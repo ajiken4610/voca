@@ -7,7 +7,7 @@ div
     template(to="/home", v-for="(_setting, key, index) in settings")
       UiItemDivider.m(v-if="index !== 0")
       UiItem
-        UiItemTextContent(@click="$router.push(`/settings/${key}`)")
+        UiItemTextContent.w-100(@click="$router.push(`/settings/${key}`)")
           UiItemText1 {{ hint[key].name }}
           UiItemText2 {{ hint[key].desc }}
         UiItemLastContent
@@ -51,5 +51,9 @@ onMounted(() => {
 .border-left {
   padding-left: 0.5rem;
   border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.w-100 {
+  width: 100%;
 }
 </style>

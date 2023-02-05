@@ -2,10 +2,10 @@ import CalScoreWorker from "@/utils/workers/updateScore?worker";
 import type { WordData } from "~~/composables/useWordList";
 
 export default () => {
-  return new Promise<WordData[]>((resolve) => {
+  return new Promise<[WordData[], number]>((resolve) => {
     const worker = new CalScoreWorker();
     worker.addEventListener("message", (e) => {
-      const data = e.data as WordData[];
+      const data = e.data as [WordData[], number];
       worker.terminate();
       resolve(data);
     });

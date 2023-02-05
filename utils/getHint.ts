@@ -1,3 +1,3 @@
 export default (text: string) => {
-  return text.replaceAll(/(?<=[^ ])[^ ]|[^ ](?=[^ ]? )/g, "*");
+  return text.replaceAll(/(?<=\S)\S|\S(?=\S?\b)/g, "*");
 };

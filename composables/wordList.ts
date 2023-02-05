@@ -8,11 +8,14 @@ export const updateArgumentWordListScore = (list: WordData[]) => {
   for (const word of list) {
     word.score += Math.pow(ratio, word.correctCount);
   }
+  const oldLast = list[list.length - 1];
   sortArgumentWordList(list);
+  const oldLastIndex = list.indexOf(oldLast);
   const minScore = list[0].score;
   for (const word of list) {
     word.score -= minScore;
   }
+  return oldLastIndex;
 };
 
 export const sortArgumentWordList = (list: WordData[]) => {
@@ -22,16 +25,20 @@ export const sortArgumentWordList = (list: WordData[]) => {
   }
   list.sort((a, b) => a.score - b.score);
 };
-
+export enum ProblemResult {
+  CORRECT,
+  PROBABLY_CORRECT,
+  WRONG,
+}
 export const updateCorrectCount = (
   list: WordData[],
   index: number,
-  isCorrect: boolean
+  state: ProblemResult
 ) => {
   const current = list[index];
-  if (isCorrect) {
-    current.correctCount + correct;
-  } else {
+  if (state === ProblemResult.CORRECT) {
+    current.correctCount += correct;
+  } else if (state === ProblemResult.WRONG) {
     current.correctCount = Math.min(current.correctCount - wrong, 0);
   }
 };

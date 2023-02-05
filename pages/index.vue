@@ -11,7 +11,7 @@ div
   UiButton(raised @click="update") Update
   UiTextfield(v-model="textA") A
   UiTextfield(v-model="textB") B
-  UiButton(raised @click="calcDistance") calc
+  //- UiButton(raised @click="calcDistance") calc
   div {{ distance }}
 </template>
 
@@ -36,22 +36,22 @@ const genRandomString = (length: number) => {
 }
 const textA = ref(genRandomString(40));
 const textB = ref(genRandomString(40));
-const distance = ref(0)
+const distance = computed(() => calNgramDistance(textA.value, textB.value))
 const update = async () => {
-  console.log(useWordList().value = await updateScoreOnBackground())
+  console.log(useWordList().value = (await updateScoreOnBackground())[0])
 }
-watchEffect(() => {
-  distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
-})
-const calcDistance = () => {
-  console.log(textA.value.length, textB.value.length)
+// watchEffect(() => {
+//   distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
+// })
+// const calcDistance = () => {
+//   console.log(textA.value.length, textB.value.length)
 
-  const start = performance.now()
-  distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
-  const end = performance.now()
-  // console.log(useCDBSMemoForDebug().memoIndex.length)
-  console.log(end - start)
-}
+//   const start = performance.now()
+//   distance.value = calculateDistanceBetweenSentence(textA.value, textB.value)
+//   const end = performance.now()
+//   // console.log(useCDBSMemoForDebug().memoIndex.length)
+//   console.log(end - start)
+// }
 </script>
 
 <style scoped lang="scss">

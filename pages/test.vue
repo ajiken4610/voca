@@ -1,14 +1,18 @@
 <template lang="pug">
 div
   template(v-if="word")
-    | {{ word }}
+    | {{ list }}
     CentorizedTitle {{ word.key }}
     .centorize
       | {{ word.ex }}
-      UiTextfield(v-model="answer", @enter="confirmAnswer") Value
+      UiTextfield(v-model="answer", @enter="onButtonClick" :disable="!confirmable") Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       .mlauto
-        UiButton(@click="confirmAnswer", raised) Confirm
+        //- UiButton(@click="confirmAnswer" :disabled="result===JudgeResult.CALCULATING", raised) {{nextButtonText}}
+        UiButton(raised :disabled="calculating" @click="onButtonClick")
+          template(v-if="confirmable") Confirm
+          template(v-else-if="calculating") Calculating
+          template(v-else) Next
   template(v-else)
     .title-wrapper
       CentorizedTitle.title No item in word list.
@@ -23,26 +27,81 @@ const word = computed(() =>
 );
 const settings = useSettings();
 const answer = ref("");
-enum JudgeResult {
-  ANSWERING,
-  CORRECT,
-  PROBABLY_CORRECT,
-  WRONG
+const confirmable = ref(true)
+const calculating = ref(false)
+const onButtonClick = () => {
+  if (confirmable.value) {
+    confirmAnswer()
+  } else if (!calculating.value) {
+    goNext()
+  }
 }
-const result = ref(JudgeResult.ANSWERING)
+const result = ref(ProblemResult.CORRECT)
 const confirmAnswer = () => {
+  confirmable.value = false;
   const distance = calNgramDistance(answer.value, word.value?.value || "")
-  if (distance === 1) {
+  if (distance > .9999) {
     // 正解
-    result.value = JudgeResult.CORRECT
+    result.value = ProblemResult.CORRECT
+    console.log("correct")
   } else if (distance > .9) {
     // 仮正解
-    result.value = JudgeResult.PROBABLY_CORRECT
+    result.value = ProblemResult.PROBABLY_CORRECT
+    console.log("pro correct")
   } else {
     // 不正解
-    result.value = JudgeResult.WRONG
+    result.value = ProblemResult.WRONG
+    console.log("wr")
   }
-};
+}
+const goNext = async () => {
+  calculating.value = true;
+  const next = await updatingPromise;
+  const nextList = next[0]
+  const lastIndex = next[1];
+  updateCorrectCount(nextList, lastIndex, result.value)
+  list.value = nextList;
+  updatingPromise = updateScoreOnBackground()
+  answer.value = ""
+  calculating.value = false;
+  confirmable.value = true;
+}
+
+
+let updatingPromise = updateScoreOnBackground()
+// enum JudgeResult {
+//   CORRECT,
+//   PROBABLY_CORRECT,
+//   WRONG,
+//   ANSWERING,
+//   CALCULATING
+// }
+// const result = ref(JudgeResult.ANSWERING)
+// const confirmAnswer = () => {
+//   const distance = calNgramDistance(answer.value, word.value?.value || "")
+//   if (result.value !== JudgeResult.ANSWERING) {
+//     nextProblem()
+//   }
+//   if (distance > .9999) {
+//     // 正解
+//     result.value = JudgeResult.CORRECT
+//     updateCorrectCount(list.value, list.value.length - 1, CorrectState.CORRECT)
+//   } else if (distance > .9) {
+//     // 仮正解
+//     result.value = JudgeResult.PROBABLY_CORRECT
+//     updateCorrectCount(list.value, list.value.length - 1, CorrectState.PROBABLY_CORRECT)
+//   } else {
+//     // 不正解
+//     result.value = JudgeResult.WRONG
+//     updateCorrectCount(list.value, list.value.length - 1, CorrectState.WRONG)
+//   }
+// };
+// const nextProblem = () => {
+//   result.value = JudgeResult.ANSWERING
+// }
+// const nextButtonText = computed(() => ["Next", "Next", "Next", "Confirm", "Calculating..."][result.value])
+
+// console.log(getHint("hello , this is in the book of the of !"))
 </script>
 
 <style scoped lang="scss">

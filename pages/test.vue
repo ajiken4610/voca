@@ -6,7 +6,7 @@ div
     CentorizedTitle {{ word.key }}
     .centorize
       | {{ word.ex }}
-      UiTextfield(v-model="answer", @enter="onButtonClick" :disable="!confirmable") Value
+      UiTextfield(v-model="answer", @enter="onButtonClick" :disabled="!confirmable") Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       .mlauto
         //- UiButton(@click="confirmAnswer" :disabled="result===JudgeResult.CALCULATING", raised) {{nextButtonText}}

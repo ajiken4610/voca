@@ -5,8 +5,8 @@ const func = (
   bOffset: number,
   memo: ReturnType<typeof useMemo<number>> = useMemo<number>()
 ): number => {
-  if (a.length - 1 === aOffset) return b.length - bOffset - 1;
-  if (b.length - 1 === bOffset) return a.length - aOffset - 1;
+  if (a.length === aOffset) return b.length - bOffset;
+  if (b.length === bOffset) return a.length - aOffset;
   const memoData = memo.get(aOffset, bOffset);
   if (memoData) {
     return memoData;

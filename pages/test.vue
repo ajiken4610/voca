@@ -70,9 +70,9 @@ const goNext = async () => {
 
 
 let updatingPromise = updateScoreOnBackground()
-// console.log(calculateDistanceBetweenSentence("hello,world", "hello,world"))
+// console.log(calculateDistanceBetweenSentence("abcd", "abce"))
 console.time("calDistInfo")
-console.log(calStringDistInfos("", ""))
+console.log(calStringDistInfos("hello", "world"))
 console.timeEnd("calDistInfo")
 // enum JudgeResult {
 //   CORRECT,

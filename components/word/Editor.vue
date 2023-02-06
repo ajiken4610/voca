@@ -8,7 +8,7 @@ div
     UiFormField
       UiSelect(v-model="word.type", :options="selectOptions", fullwidth) Type
     UiFormField
-      UiTextfield(v-model="word.ex", fullwidth, inputType="textarea", rows="8") Example (use [] to hide words)
+      UiTextfield(v-model="word.ex", fullwidth, inputType="textarea", rows="8") Example
     UiFormField
       UiCheckbox(v-model="word.hideHint", input-id="hide-hint")
       label(for="hide-hint") Hide hint

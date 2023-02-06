@@ -5,7 +5,7 @@ div
     Title Testing {{ word.key }}
     CentorizedTitle {{ word.key }}
     .centorize
-      | {{ word.ex }}
+      | {{ confirmable ? getExample(word.ex): getExAnswer(word.ex,word.value) }}
       UiTextfield(v-model="answer", @enter="onButtonClick" :disabled="!confirmable") Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       .mlauto
@@ -70,6 +70,10 @@ const goNext = async () => {
 
 
 let updatingPromise = updateScoreOnBackground()
+// console.log(calculateDistanceBetweenSentence("hello,world", "hello,world"))
+console.time("calDistInfo")
+console.log(calStringDistInfos("", ""))
+console.timeEnd("calDistInfo")
 // enum JudgeResult {
 //   CORRECT,
 //   PROBABLY_CORRECT,

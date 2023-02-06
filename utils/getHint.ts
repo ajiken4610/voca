@@ -1,3 +1,6 @@
 export default (text: string) => {
-  return text.replaceAll(/(?<=\S)\S|\S(?=\S?\b)/g, "*");
+  const replaced = text.replaceAll(/(?<=\S)\S|\S(?=(\S?\b))/g, "*");
+  return replaced.replaceAll(/(?<= |^)\*(?= |$)/g, (_match, offset) =>
+    text.charAt(offset)
+  );
 };

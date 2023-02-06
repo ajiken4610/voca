@@ -22,6 +22,8 @@ div
 </template>
 
 <script setup lang="ts">
+import { getExample, getExAnswer } from '~~/utils/getExample';
+import getHint from "~~/utils/getHint";
 const list = useWordList();
 const word = computed(() =>
   list.value.length ? list.value[list.value.length - 1] : null

@@ -5,12 +5,16 @@ div
     Title Testing {{ word.key }}
     CentorizedTitle {{ word.key }}
     .centorize
-      | {{ confirmable ? getExample(word.ex,word.value): getExAnswer(word.ex,word.value) }}
-      UiTextfield(v-model="answer", @enter="onButtonClick" :disabled="!confirmable") Value
+      | {{ confirmable ? getExample(word.ex, word.value) : getExAnswer(word.ex, word.value) }}
+      UiTextfield(
+        v-model="answer",
+        @enter="onButtonClick",
+        :disabled="!confirmable"
+      ) Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       .mlauto
         //- UiButton(@click="confirmAnswer" :disabled="result===JudgeResult.CALCULATING", raised) {{nextButtonText}}
-        UiButton(raised :disabled="calculating" @click="onButtonClick")
+        UiButton(raised, :disabled="calculating", @click="onButtonClick")
           template(v-if="confirmable") Confirm
           template(v-else-if="calculating") Calculating
           template(v-else) Next
@@ -22,7 +26,7 @@ div
 </template>
 
 <script setup lang="ts">
-import { getExample, getExAnswer } from '~~/utils/getExample';
+import { getExample, getExAnswer } from "~~/utils/getExample";
 import getHint from "~~/utils/getHint";
 const list = useWordList();
 const word = computed(() =>
@@ -30,48 +34,47 @@ const word = computed(() =>
 );
 const settings = useSettings();
 const answer = ref("");
-const confirmable = ref(true)
-const calculating = ref(false)
+const confirmable = ref(true);
+const calculating = ref(false);
 const onButtonClick = () => {
   if (confirmable.value) {
-    confirmAnswer()
+    confirmAnswer();
   } else if (!calculating.value) {
-    goNext()
+    goNext();
   }
-}
-const result = ref(ProblemResult.CORRECT)
+};
+const result = ref(ProblemResult.CORRECT);
 const confirmAnswer = () => {
   confirmable.value = false;
-  const distance = calNgramDistance(answer.value, word.value?.value || "")
-  if (distance > .9999) {
+  const distance = calNgramDistance(answer.value, word.value?.value || "");
+  if (distance > 0.9999) {
     // 正解
-    result.value = ProblemResult.CORRECT
-    console.log("correct")
-  } else if (distance > .9) {
+    result.value = ProblemResult.CORRECT;
+    console.log("correct");
+  } else if (distance > 0.9) {
     // 仮正解
-    result.value = ProblemResult.PROBABLY_CORRECT
-    console.log("pro correct")
+    result.value = ProblemResult.PROBABLY_CORRECT;
+    console.log("pro correct");
   } else {
     // 不正解
-    result.value = ProblemResult.WRONG
-    console.log("wr")
+    result.value = ProblemResult.WRONG;
+    console.log("wr");
   }
-}
+};
 const goNext = async () => {
   calculating.value = true;
   const next = await updatingPromise;
-  const nextList = next[0]
+  const nextList = next[0];
   const lastIndex = next[1];
-  updateCorrectCount(nextList, lastIndex, result.value)
+  updateCorrectCount(nextList, lastIndex, result.value);
   list.value = nextList;
-  updatingPromise = updateScoreOnBackground()
-  answer.value = ""
+  updatingPromise = updateScoreOnBackground();
+  answer.value = "";
   calculating.value = false;
   confirmable.value = true;
-}
+};
 
-
-let updatingPromise = updateScoreOnBackground()
+let updatingPromise = updateScoreOnBackground();
 // console.log(calculateDistanceBetweenSentence("abcd", "abce"))
 // console.time("calDistInfo")
 // console.log(calStringDistInfos("hello", "world"))

@@ -123,9 +123,11 @@ const func = (
       retLcsStart = updated.lcsStart;
       retLcsEnd = updated.lcsEnd;
     } else if (retDistance === inserted.distance + 1) {
+      // inserted
       retLcsStart = inserted.lcsStart;
       retLcsEnd = inserted.lcsEnd;
     } else {
+      // deleted
       retLcsStart = deleted.lcsStart;
       retLcsEnd = deleted.lcsEnd;
     }

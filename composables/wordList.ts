@@ -7,7 +7,7 @@ const wrong = 2;
 export const updateArgumentWordListScore = (list: WordData[]) => {
   for (const word of list) {
     word.score += Math.pow(ratio, word.correctCount);
-    word.score > 1 && (word.score = Math.sqrt(word.score));
+    word.score > 1 && (word.score = word.score ** 0.3);
   }
   const oldLast = list[list.length - 1];
   sortArgumentWordList(list);

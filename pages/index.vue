@@ -7,9 +7,20 @@ div
       br
       | Yuki Voca Learn
   UiDivider
+  UiTextfield(v-model="inputA")
+  UiTextfield(v-model="inputB")
+  DiffView(:src="inputA",:dst="inputB" style="font-size:2rem;")
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const inputA = ref("acbdeacbed")
+const inputB = ref("acebdabbabed")
+const result = ref<ReturnType<typeof calDiffInfo>>()
+watchEffect(() => {
+  result.value = calDiffInfo(inputA.value, inputB.value)
+  // console.log(toRaw(result.value))
+})
+</script>
 
 <style scoped lang="scss">
 .title {
@@ -22,5 +33,15 @@ div
 .title-wrapper {
   height: 33vh;
   position: relative;
+}
+
+.add {
+  background-color: rgba(0, 255, 26, 0.5);
+  // border-radius: 5px;
+}
+
+.delete {
+  background-color: rgba(255, 0, 128, 0.5);
+  // border-radius: 5px;
 }
 </style>

@@ -12,6 +12,11 @@ div
         :disabled="!confirmable"
       ) Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
+      h4(v-if="!confirmable")
+        template(v-if="result===ProblemResult.CORRECT") Correct!
+        template(v-else-if="result===ProblemResult.PROBABLY_CORRECT") Probably correct.
+        template(v-else) Wrong...
+      DiffView(v-if="!confirmable&&result!==ProblemResult.CORRECT" :src="answer" :dst="word.value")
       .mlauto
         //- UiButton(@click="confirmAnswer" :disabled="result===JudgeResult.CALCULATING", raised) {{nextButtonText}}
         UiButton(raised, :disabled="calculating", @click="onButtonClick")

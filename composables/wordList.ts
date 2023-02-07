@@ -7,6 +7,7 @@ const wrong = 2;
 export const updateArgumentWordListScore = (list: WordData[]) => {
   for (const word of list) {
     word.score += Math.pow(ratio, word.correctCount);
+    word.score > 1 && (word.score = Math.sqrt(word.score));
   }
   const oldLast = list[list.length - 1];
   sortArgumentWordList(list);
@@ -30,11 +31,7 @@ export enum ProblemResult {
   PROBABLY_CORRECT,
   WRONG,
 }
-export const updateCorrectCount = (
-  list: WordData[],
-  index: number,
-  state: ProblemResult
-) => {
+export const updateCorrectCount = (list: WordData[], index: number, state: ProblemResult) => {
   const current = list[index];
   if (state === ProblemResult.CORRECT) {
     current.correctCount += correct;

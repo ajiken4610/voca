@@ -66,15 +66,7 @@ const func = (
     };
   }
   if (a[aOffset] === b[bOffset]) {
-    const ret = func(
-      a,
-      aOffset + 1,
-      b,
-      bOffset + 1,
-      distMat,
-      lcsStartMat,
-      lcsEndMat
-    );
+    const ret = func(a, aOffset + 1, b, bOffset + 1, distMat, lcsStartMat, lcsEndMat);
     distMat.set(aOffset, bOffset, ret.distance);
     const cLcsStart = aOffset;
     const cLcsEnd = ret.lcsStart === aOffset + 1 ? ret.lcsEnd : aOffset + 1;
@@ -86,35 +78,10 @@ const func = (
     lcsEndMat.set(aOffset, bOffset, ret.lcsEnd);
     return ret;
   } else {
-    const updated = func(
-      a,
-      aOffset + 1,
-      b,
-      bOffset + 1,
-      distMat,
-      lcsStartMat,
-      lcsEndMat
-    );
-    const inserted = func(
-      a,
-      aOffset,
-      b,
-      bOffset + 1,
-      distMat,
-      lcsStartMat,
-      lcsEndMat
-    );
-    const deleted = func(
-      a,
-      aOffset + 1,
-      b,
-      bOffset,
-      distMat,
-      lcsStartMat,
-      lcsEndMat
-    );
-    const retDistance =
-      1 + Math.min(updated.distance, inserted.distance, deleted.distance);
+    const updated = func(a, aOffset + 1, b, bOffset + 1, distMat, lcsStartMat, lcsEndMat);
+    const inserted = func(a, aOffset, b, bOffset + 1, distMat, lcsStartMat, lcsEndMat);
+    const deleted = func(a, aOffset + 1, b, bOffset, distMat, lcsStartMat, lcsEndMat);
+    const retDistance = 1 + Math.min(updated.distance, inserted.distance, deleted.distance);
     distMat.set(aOffset, bOffset, retDistance);
     let retLcsStart;
     let retLcsEnd;

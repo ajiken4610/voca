@@ -14,6 +14,7 @@
     "@volar/vue-language-plugin-pug": "^1.0.24",
     "balm-ui": "^10.13.4",
     "firebase": "^9.17.1",
+    "firebaseui": "^6.0.2",
     "nuxt": "3.0.0",
     "prettier": "^2.8.2",
     "pug": "^3.0.2",

@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 import { auth as authui } from "firebaseui";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -32,3 +33,5 @@ auth.onAuthStateChanged((_user) => {
 export const useAuthIsReady = () => isAuthReady;
 const ui = new authui.AuthUI(auth);
 export const useAuthUI = () => ui;
+const storage = getStorage(app);
+export const useStorage = () => storage;

@@ -1,16 +1,16 @@
 <template lang="pug">
 div
   template(v-if="word")
-    | {{ list }}
+    //- | {{ list }}
     Title Testing {{ word.key }}
     CentorizedTitle {{ word.key }}
     .centorize
       | {{ confirmable ? getExample(word.ex, word.value) : getExAnswer(word.ex, word.value) }}
-      UiTextfield(
-        v-model="answer",
-        @enter="onButtonClick",
-        :disabled="!confirmable"
-      ) Value
+      div(ref="textfield")
+        UiTextfield.w-100(
+          v-model="answer",
+          :disabled="!confirmable"
+        ) Value
       UiTextfieldHelper(v-if="settings.showHint && !word.hideHint", visible) {{ getHint(word.value) }}
       h4(v-if="!confirmable")
         template(v-if="result===ProblemResult.CORRECT") Correct!
@@ -41,6 +41,12 @@ const settings = useSettings();
 const answer = ref("");
 const confirmable = ref(true);
 const calculating = ref(false);
+const textfield = ref<HTMLDivElement>()
+let inputElement: HTMLInputElement
+onMounted(() => {
+  inputElement = textfield.value?.querySelector("input.mdc-text-field__input") as HTMLInputElement
+  inputElement.focus()
+})
 const onButtonClick = () => {
   if (confirmable.value) {
     confirmAnswer();
@@ -48,6 +54,15 @@ const onButtonClick = () => {
     goNext();
   }
 };
+const onKeyUpListener = (e: KeyboardEvent) => {
+  if (e.key === "Enter") {
+    onButtonClick()
+  }
+}
+window.addEventListener("keyup", onKeyUpListener)
+onUnmounted(() => {
+  window.removeEventListener("keyup", onKeyUpListener)
+})
 const result = ref(ProblemResult.CORRECT);
 const confirmAnswer = () => {
   confirmable.value = false;
@@ -55,15 +70,15 @@ const confirmAnswer = () => {
   if (distance > 0.9999) {
     // 正解
     result.value = ProblemResult.CORRECT;
-    console.log("correct");
+    // console.log("correct");
   } else if (distance > 0.9) {
     // 仮正解
     result.value = ProblemResult.PROBABLY_CORRECT;
-    console.log("pro correct");
+    // console.log("pro correct");
   } else {
     // 不正解
     result.value = ProblemResult.WRONG;
-    console.log("wr");
+    // console.log("wr");
   }
 };
 const goNext = async () => {
@@ -77,6 +92,7 @@ const goNext = async () => {
   answer.value = "";
   calculating.value = false;
   confirmable.value = true;
+  nextTick(() => { inputElement.focus() })
 };
 
 let updatingPromise = updateScoreOnBackground();
@@ -120,6 +136,10 @@ let updatingPromise = updateScoreOnBackground();
 </script>
 
 <style scoped lang="scss">
+.w-100 {
+  width: 100%;
+}
+
 .title {
   position: absolute;
   top: 50%;

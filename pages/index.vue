@@ -20,6 +20,7 @@ watchEffect(() => {
   result.value = calDiffInfo(inputA.value, inputB.value)
   // console.log(toRaw(result.value))
 })
+useFirebaseApp()
 </script>
 
 <style scoped lang="scss">

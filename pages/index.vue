@@ -7,19 +7,21 @@ div
       br
       | Yuki Voca Learn
   UiDivider
-  UiTextfield(v-model="inputA")
-  UiTextfield(v-model="inputB")
-  DiffView(:src="inputA",:dst="inputB" style="font-size:2rem;")
+  UiButton(@click="ex") export
+  UiTextfield(v-model="importData")
+  UiButton(@click="im") import
+  div {{validation}}
 </template>
 
 <script setup lang="ts">
-const inputA = ref("acbdeacbed")
-const inputB = ref("acebdabbabed")
-const result = ref<ReturnType<typeof calDiffInfo>>()
-watchEffect(() => {
-  result.value = calDiffInfo(inputA.value, inputB.value)
-  // console.log(toRaw(result.value))
-})
+const ex = () => {
+  console.log(exportWord())
+}
+const im = () => {
+  console.log(importWord(importData.value))
+}
+const importData = ref("")
+const validation = computed(() => isImportableWord(importData.value))
 useFirebaseApp()
 </script>
 

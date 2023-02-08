@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   template(v-if="word")
-    | {{ list }}
+    //- | {{ list }}
     Title Testing {{ word.key }}
     CentorizedTitle {{ word.key }}
     .centorize

@@ -55,15 +55,15 @@ const confirmAnswer = () => {
   if (distance > 0.9999) {
     // 正解
     result.value = ProblemResult.CORRECT;
-    console.log("correct");
+    // console.log("correct");
   } else if (distance > 0.9) {
     // 仮正解
     result.value = ProblemResult.PROBABLY_CORRECT;
-    console.log("pro correct");
+    // console.log("pro correct");
   } else {
     // 不正解
     result.value = ProblemResult.WRONG;
-    console.log("wr");
+    // console.log("wr");
   }
 };
 const goNext = async () => {

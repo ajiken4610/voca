@@ -25,5 +25,10 @@ const analytics = getAnalytics(app);
 export const useAnalytics = () => analytics;
 const auth = getAuth();
 export const useAuth = () => auth;
+const isAuthReady = ref(0);
+auth.onAuthStateChanged((_user) => {
+  isAuthReady.value++;
+});
+export const useAuthIsReady = () => isAuthReady;
 const ui = new authui.AuthUI(auth);
 export const useAuthUI = () => ui;

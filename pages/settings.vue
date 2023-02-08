@@ -24,9 +24,15 @@ div
       SettingDescription(:settingKey="descriptionKey")
     UiDialogActions
       UiButton(@click="showDescriptionDialog = false") Save and close
+  .login-ui(ref="loginDiv")
+  .align-center(v-if="isAuthReady&&auth?.currentUser")
+    | Logged in as {{ auth.currentUser.displayName }}
+    UiButton.ms(outlined @click="logout") Logout
 </template>
 
 <script setup lang="ts">
+import { GoogleAuthProvider } from '@firebase/auth';
+
 definePageMeta({ useBackButton: true });
 const settings = useSettings();
 const hint = useSettingsHint();
@@ -40,6 +46,16 @@ onMounted(() => {
     showDescriptionDialog.value = !!key;
   });
 });
+const loginDiv = ref<HTMLDivElement>()
+onMounted(() => {
+  const authui = useAuthUI()
+  authui.start(loginDiv.value!, { signInOptions: [GoogleAuthProvider.PROVIDER_ID], signInSuccessUrl: "/" })
+})
+const auth = useAuth()
+const isAuthReady = useAuthIsReady()
+const logout = () => {
+  auth.signOut()
+}
 </script>
 
 <style scoped lang="scss">
@@ -56,4 +72,16 @@ onMounted(() => {
 .w-100 {
   width: 100%;
 }
+
+.align-center {
+  text-align: center;
+}
+
+.ms {
+  margin-left: 1rem;
+}
+</style>
+
+<style lang="scss">
+@use "firebaseui/dist/firebaseui.css";
 </style>

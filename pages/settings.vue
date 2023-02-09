@@ -52,7 +52,7 @@ onMounted(() => {
   authui.start(loginDiv.value!, { signInOptions: [GoogleAuthProvider.PROVIDER_ID], signInSuccessUrl: "/" })
 })
 const auth = useAuth()
-const isAuthReady = useAuthIsReady()
+const isAuthReady = useIsAuthReady()
 const logout = () => {
   auth.signOut()
 }

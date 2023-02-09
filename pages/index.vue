@@ -7,21 +7,15 @@ div
       br
       | Yuki Voca Learn
   UiDivider
-  UiButton(@click="ex") export
-  UiTextfield(v-model="importData")
-  UiButton(@click="im") import
-  div {{validation}}
+  UiButton(@click="up") upload
 </template>
 
 <script setup lang="ts">
-const ex = () => {
-  console.log(exportWord())
+import uploadString from '~~/utils/uploadString';
+const path = computed(() => "word/" + (useIsAuthReady() && useAuth().currentUser?.uid) + "/helloworld.json")
+const up = () => {
+  uploadString(path.value, exportWord())
 }
-const im = () => {
-  console.log(importWord(importData.value))
-}
-const importData = ref("")
-const validation = computed(() => isImportableWord(importData.value))
 useFirebaseApp()
 </script>
 

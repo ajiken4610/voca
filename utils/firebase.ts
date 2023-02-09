@@ -30,7 +30,7 @@ const isAuthReady = ref(0);
 auth.onAuthStateChanged((_user) => {
   isAuthReady.value++;
 });
-export const useAuthIsReady = () => isAuthReady;
+export const useIsAuthReady = () => isAuthReady;
 const ui = new authui.AuthUI(auth);
 export const useAuthUI = () => ui;
 const storage = getStorage(app);

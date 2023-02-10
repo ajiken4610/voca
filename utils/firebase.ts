@@ -26,8 +26,11 @@ export const useAnalytics = () => analytics;
 const auth = getAuth();
 export const useAuth = () => auth;
 const isAuthReady = ref(0);
-auth.onAuthStateChanged((_user) => {
+auth.onAuthStateChanged((user) => {
   isAuthReady.value++;
+  if (user) {
+    showToast("Logged in as " + user.displayName);
+  } else [showToast("You are not logged in.")];
 });
 export const useAuthIsReady = () => isAuthReady;
 const ui = new authui.AuthUI(auth);

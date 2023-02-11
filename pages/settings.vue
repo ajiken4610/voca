@@ -28,6 +28,9 @@ div
   .align-center(v-if="isAuthReady&&auth?.currentUser")
     | Logged in as {{ auth.currentUser.displayName }}
     UiButton.ms(outlined @click="logout") Logout
+  .wa.align-center.mt
+    UiButton(@click="importData" outlined) Import data
+    UiButton.ms(@click="exportData" outlined) Export data
 </template>
 
 <script setup lang="ts">
@@ -52,9 +55,21 @@ onMounted(() => {
   authui.start(loginDiv.value!, { signInOptions: [GoogleAuthProvider.PROVIDER_ID], signInSuccessUrl: "/" })
 })
 const auth = useAuth()
-const isAuthReady = useAuthIsReady()
+const isAuthReady = useIsAuthReady()
 const logout = () => {
   auth.signOut()
+}
+const importData = () => {
+  const data = prompt("Data?")
+  if (data && isImportableWord(data)) {
+    importWord(data)
+  } else {
+    showToast("Word data is incorrect.")
+  }
+}
+const exportData = async () => {
+  await navigator.clipboard.writeText(exportWord())
+  showToast("Copied to clipboard")
 }
 </script>
 
@@ -79,6 +94,10 @@ const logout = () => {
 
 .ms {
   margin-left: 1rem;
+}
+
+.mt {
+  margin-top: 1rem
 }
 </style>
 

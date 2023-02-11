@@ -7,19 +7,15 @@ div
       br
       | Yuki Voca Learn
   UiDivider
-  UiTextfield(v-model="inputA")
-  UiTextfield(v-model="inputB")
-  DiffView(:src="inputA",:dst="inputB" style="font-size:2rem;")
+  UiButton(@click="up") upload
 </template>
 
 <script setup lang="ts">
-const inputA = ref("acbdeacbed")
-const inputB = ref("acebdabbabed")
-const result = ref<ReturnType<typeof calDiffInfo>>()
-watchEffect(() => {
-  result.value = calDiffInfo(inputA.value, inputB.value)
-  // console.log(toRaw(result.value))
-})
+import uploadString from '~~/utils/uploadString';
+const path = computed(() => "word/" + (useIsAuthReady() && useAuth().currentUser?.uid) + "/helloworld.json")
+const up = () => {
+  uploadString(path.value, exportWord())
+}
 useFirebaseApp()
 </script>
 
